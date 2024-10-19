@@ -1,19 +1,6 @@
-
-import { ActivityIndicator } from 'react-native'
-import * as S from './styles'
-interface IButton {
-  title: string
-  backgroundColor?: string
-  color?: string
-  onPress?: () => void
-  border?: number
-  borderColor?: string
-  width?: number
-  height?: number
-  children?: React.ReactNode
-  isLoading: boolean
-}
-
+import { ActivityIndicator } from 'react-native';
+import { IButton } from './interface';
+import * as S from './styles';
 export const Button = (props: IButton) => {
   const Loading = props.isLoading
   return (
