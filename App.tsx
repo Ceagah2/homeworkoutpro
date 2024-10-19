@@ -1,20 +1,32 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import Routes from '@/presentation/routes';
+import { ClerkLoaded, ClerkProvider } from '@clerk/clerk-expo';
+import {
+  Lato_400Regular,
+  Lato_700Bold,
+  useFonts
+} from '@expo-google-fonts/lato';
+import {
+  Montserrat_400Regular,
+  Montserrat_700Bold
+} from '@expo-google-fonts/montserrat';
+import { ActivityIndicator } from 'react-native';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+export default function App(){
+const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
+  const [fontsLoaded] = useFonts({
+    Lato_400Regular,
+    Lato_700Bold,
+    Montserrat_400Regular,
+    Montserrat_700Bold
+  })
+  
+  if(!fontsLoaded) return <ActivityIndicator />
+
+  return(
+    <ClerkProvider publishableKey={publishableKey}>
+      <ClerkLoaded>
+        <Routes />
+      </ClerkLoaded>
+    </ClerkProvider>
+  )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
