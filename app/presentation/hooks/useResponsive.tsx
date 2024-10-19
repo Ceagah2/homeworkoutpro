@@ -3,13 +3,13 @@ import { Dimensions } from 'react-native';
 const deviceHeight = Dimensions.get('window').height;
 export const useResponsive = (size: number) => {
   if (deviceHeight <= 568) {
-    return Math.round(size);
+    return `${Math.round(size)}px`;
   } else if (deviceHeight <= 667) {
-    return Math.round(size * 1.2); //Math.round(size * 1.17);
+    return `${Math.round(size * 1.15)}px`; //Math.round(size * 1.17);
   } else if (deviceHeight <= 736) {
-    return Math.round(size * 1.3); //Math.round(size * 1.29);
+    return `${Math.round(size * 1.3)}px`; //Math.round(size * 1.29);
   } else if (deviceHeight <= 1024) {
-    return Math.round(size * 1.4);
+    return `${Math.round(size * 1.5)}px`;
   }
 };
 
