@@ -19,10 +19,11 @@ export const Container = styled.TouchableOpacity<TContainer>`
   background-color: ${(props) => props.backgroundColor ? props.backgroundColor : colors.primaryAction};
   width: ${(props) => props.width}px; 
   height: ${(props) => props.height}px; 
-  padding: 16px;
+  padding: 8px;
   border-radius: 8px;
   align-items: center;
   justify-content: center;
+  flex-direction: row;
   border: ${(props) => props.border ? props.border + `px ` + `solid ` + props.borderColor : 0};
 `;
 

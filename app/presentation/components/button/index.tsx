@@ -9,8 +9,8 @@ export const Button = (props: IButton) => {
       onPress={props.onPress}
       border={props.border}
       borderColor={props.borderColor}
-      width={props.width ?? 0}
-      height={props.height ?? 0}
+      width={props.width ?? 150}
+      height={props.height ?? 50}
     >
       {!Loading ? (
         <>
