@@ -1,21 +1,51 @@
+import { AntDesign, MaterialIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React, { useEffect, useState } from "react";
-import { GetItem } from "./hooks/useStorage";
-
-import Home from "@/presentation/screens/Auth/Home";
 import { ActivityIndicator, View } from "react-native";
+import { GetItem } from "./hooks/useStorage";
+import Home from "./screens/Auth/Home";
 import Login from "./screens/Public/Login";
 import { Slider } from "./screens/Public/Slider/Slide";
+import { colors } from './theme';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
+const getTabBarIcon = (
+  routeName: string,
+  focused: boolean,
+  color: string,
+  size: number
+) => {
+  const icons: Record<string, { component: React.ElementType; name: string }> =
+    {
+      Home: { component: AntDesign, name: "home" },
+      Profile: { component: MaterialIcons, name: "person" },
+      Settings: { component: AntDesign, name: "setting" },
+    };
+
+  const IconComponent = icons[routeName]?.component;
+  const iconName = icons[routeName]?.name;
+
+  if (!IconComponent || !iconName) return null; 
+
+  return <IconComponent name={iconName} size={size} color={color} />;
+};
+
 
 function MainTabs() {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) =>
+          getTabBarIcon(route.name, focused, color, size),
+        tabBarActiveTintColor: colors.primaryAction,
+        tabBarInactiveTintColor: "gray",
+        headerShown: false
+      })}
+    >
       <Tab.Screen name="Home" component={Home} />
     </Tab.Navigator>
   );
@@ -26,10 +56,14 @@ export default function Routes() {
 
    const checkIsOnboarded = async () => {
      const onboardStatus = await GetItem("@isOnboarded");
-     if (onboardStatus === "true") {
-       setInitialRoute("Login");
+     const loginStatus = await GetItem("@isLogged")
+
+     if (loginStatus === "true") {
+      setInitialRoute("Main");
+     } else if (onboardStatus === "true") {
+      setInitialRoute("Login");
      } else {
-       setInitialRoute("Slide");
+      setInitialRoute("Slide");
      }
    };
 
