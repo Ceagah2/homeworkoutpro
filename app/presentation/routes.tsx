@@ -1,4 +1,4 @@
-import { AntDesign, MaterialIcons } from '@expo/vector-icons';
+import { AntDesign, FontAwesome5, MaterialIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -6,6 +6,8 @@ import React, { useEffect, useState } from "react";
 import { ActivityIndicator, View } from "react-native";
 import { GetItem } from "./hooks/useStorage";
 import Home from "./screens/Auth/Home";
+import Profile from './screens/Auth/Profile';
+import Workouts from './screens/Auth/Workouts';
 import Login from "./screens/Public/Login";
 import { Slider } from "./screens/Public/Slider/Slide";
 import { colors } from './theme';
@@ -21,9 +23,9 @@ const getTabBarIcon = (
 ) => {
   const icons: Record<string, { component: React.ElementType; name: string }> =
     {
-      Home: { component: AntDesign, name: "home" },
-      Profile: { component: MaterialIcons, name: "person" },
-      Settings: { component: AntDesign, name: "setting" },
+      Inicio: { component: AntDesign, name: "home" },
+      Perfil: { component: MaterialIcons, name: "person" },
+      Treinos: { component: FontAwesome5, name: "dumbbell" },
     };
 
   const IconComponent = icons[routeName]?.component;
@@ -46,7 +48,9 @@ function MainTabs() {
         headerShown: false
       })}
     >
-      <Tab.Screen name="Home" component={Home} />
+      <Tab.Screen name="Inicio" component={Home} />
+      <Tab.Screen name="Treinos" component={Workouts} />
+      <Tab.Screen name="Perfil" component={Profile} />
     </Tab.Navigator>
   );
 }
