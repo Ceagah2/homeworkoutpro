@@ -8,14 +8,18 @@ export const Slide = styled.View`
   align-items: center;
 `
 export const Title = styled.Text`
+  width: 75%;
   color: ${colors.textPrimary};
-  font-size: ${useResponsive(14)};
+  font-size: ${useResponsive(16)};
   font-family: ${fonts.heading};
+  text-align: center;
 `
 export const Description = styled.Text`
+  width: 75%;
   color: ${colors.textSecondary};
   font-size: ${useResponsive(12)};
   font-family: ${fonts.description};
+  text-align: center;
 `;
 export const Image = styled.Image`
   width: 90%;

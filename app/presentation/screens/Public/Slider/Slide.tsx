@@ -5,39 +5,44 @@ import Strength from '@assets/halter-menina.png';
 import Training from '@assets/treinadoras.png';
 import YogaGirl from '@assets/yoga-menina-negra.png';
 import { AntDesign } from "@expo/vector-icons";
-import { useNavigation } from '@react-navigation/native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import AppIntroSlider from "react-native-app-intro-slider";
 import { ISlideItem } from "./Slide.interface";
 import * as S from './Slide.styles';
 
 export const Slider = () => {
-  const navigation = useNavigation()
+  const navigation: NavigationProp<any, any> = useNavigation();
   const slides = [
     {
       id: 1,
-      title: "Titulo 1",
-      description: "Descricao 1",
+      title: "Movimento e energia para todos os dias",
+      description:
+        "Descubra a força do seu corpo com exercícios funcionais que fortalecem, alongam e melhoram a sua mobilidade para a rotina diária.",
       image: Strength,
     },
     {
       id: 2,
-      title: "Titulo 2",
-      description: "Descricao 2",
+      title: "Equilíbrio e conexão interior",
+      description:
+        "Inspire e relaxe com alongamentos inspirados no yoga, trazendo equilíbrio e harmonia para o seu corpo e mente.",
       image: YogaGirl,
     },
     {
       id: 3,
-      title: "Titulo 3",
-      description: "Descricao 3",
+      title: "Força no seu próprio ritmo",
+      description:
+        "Aprimore sua força com pesos leves, desenvolvendo resistência e definição muscular de forma segura e eficaz.",
       image: Boy,
     },
     {
       id: 4,
-      title: "Titulo 4",
-      description: "Descricao 4",
+      title: "Suporte e orientação a cada passo",
+      description:
+        "Treine com confiança com o apoio de um profissional, realizando exercícios guiados para o melhor desempenho e segurança.",
       image: Training,
     },
   ];
+
 
   const renderItem = ({item}: {item: ISlideItem}) => {
     return (
