@@ -1,31 +1,28 @@
-import { Container } from '@/presentation/components/container';
-import { colors } from '@/presentation/theme';
-import { FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
-import { useNavigation } from "@react-navigation/native";
+import { Container } from "@/presentation/components/container";
+import { colors } from "@/presentation/theme";
+import { FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
 import React from "react";
 import { TouchableOpacity } from "react-native";
 import * as S from "./styles";
+
 export default function Home() {
-  const navigation = useNavigation();
+  const navigation: NavigationProp<any, any> = useNavigation();
 
-  const navigateToWorkout = () => {
-    navigation.navigate("Workout");
-  };
+  const navigateToWorkout = () => navigation.navigate("Workout");
+  const navigateToProgress = () => navigation.navigate("Progress");
 
-  const navigateToProgress = () => {
-    navigation.navigate("Progress");
-  };
   const Categories = [
     {
       id: 1,
-      name: "Strength",
+      name: "Força",
       icon: (
         <FontAwesome5 name="dumbbell" size={24} color={colors.textPrimary} />
       ),
     },
     {
       id: 2,
-      name: "Flexibility",
+      name: "Flexibilidade",
       icon: (
         <MaterialCommunityIcons
           name="yoga"
@@ -42,11 +39,12 @@ export default function Home() {
       ),
     },
   ];
+
   return (
     <Container>
       <S.ScrollContainer>
         <S.Header>
-          <S.Title>Bem-vindo(a) {"\n"} ao Home Workout Pro!</S.Title>
+          <S.Title>Bem-vindo(a) ao {"\n"} Home Workout Pro!</S.Title>
           <S.SubTitle>Saúde e bem-estar na palma da sua mão.</S.SubTitle>
         </S.Header>
 
@@ -55,8 +53,7 @@ export default function Home() {
           <S.WorkoutImage source={{ uri: "https://via.placeholder.com/400" }} />
           <S.WorkoutTitle>Movimente-se com tudo!</S.WorkoutTitle>
           <S.WorkoutDescription>
-            Em apenas 30 minutinhos, você vai transformar seu corpo e sua
-            energia!
+            Em apenas 30 minutos, sinta a transformação no seu corpo e energia!
           </S.WorkoutDescription>
           <TouchableOpacity onPress={navigateToWorkout}>
             <S.ButtonText>
@@ -68,7 +65,7 @@ export default function Home() {
         <S.ProgressSection>
           <S.SectionTitle>Seu Progresso</S.SectionTitle>
           <S.ProgressChart
-            source={{ uri: "https://via.placeholder.com/300" }}
+            source={{ uri: "https://via.placeholder.com/400" }}
           />
           <TouchableOpacity onPress={navigateToProgress}>
             <S.ButtonText>
@@ -78,15 +75,14 @@ export default function Home() {
         </S.ProgressSection>
 
         <S.OtherSections>
-          <S.SectionTitle>Explore nossas categorias de treinos!</S.SectionTitle>
+          <S.SectionTitle>Explore nossas categorias de treino</S.SectionTitle>
           <S.CategoriesContainer>
-            {Categories &&
-              Categories.map((category) => (
-                <S.CategoryCard key={category.id}>
-                  {category.icon}
-                  <S.CategoryText>{category.name}</S.CategoryText>
-                </S.CategoryCard>
-              ))}
+            {Categories.map((category) => (
+              <S.CategoryCard key={category.id}>
+                {category.icon}
+                <S.CategoryText>{category.name}</S.CategoryText>
+              </S.CategoryCard>
+            ))}
           </S.CategoriesContainer>
         </S.OtherSections>
       </S.ScrollContainer>
