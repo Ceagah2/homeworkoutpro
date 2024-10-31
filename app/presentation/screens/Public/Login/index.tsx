@@ -6,7 +6,7 @@ import { colors } from "@/presentation/theme";
 import Training from "@assets/treinadoras.png";
 import { useOAuth } from "@clerk/clerk-expo";
 import { AntDesign } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import { Alert } from "react-native";
 import * as S from "./styles";
@@ -20,7 +20,7 @@ export default function Login() {
 
   const googleOAuth = useOAuth({ strategy: "oauth_google" });
   const appleOAuth = useOAuth({ strategy: "oauth_apple" });
-  const navigation = useNavigation()
+  const navigation: NavigationProp<any, any> = useNavigation();
 
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
@@ -38,7 +38,7 @@ export default function Login() {
       navigation.navigate("Main")
       setIsLoading(false);
     } else {
-      Alert.alert("Ops...", "Email ou senha invalidos.");
+      Alert.alert("Ops...", "Email ou senha inválidos.");
       setIsLoading(false);
       return;
     }
