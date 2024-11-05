@@ -41,6 +41,7 @@ const getTabBarIcon = (
 function MainTabs() {
   return (
     <Tab.Navigator
+      initialRouteName='Inicio'
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) =>
           getTabBarIcon(route.name, focused, color, size),
@@ -49,8 +50,8 @@ function MainTabs() {
         headerShown: false
       })}
     >
-      <Tab.Screen name="Inicio" component={Home} />
       <Tab.Screen name="Treinos" component={Workouts} />
+      <Tab.Screen name="Inicio" component={Home} />
       <Tab.Screen name="Perfil" component={Profile} />
     </Tab.Navigator>
   );

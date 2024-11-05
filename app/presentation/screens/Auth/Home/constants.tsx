@@ -5,7 +5,9 @@ export const Categories = [
   {
     id: 1,
     name: "Força",
-    icon: <FontAwesome5 name="dumbbell" size={24} color={colors.textPrimary} />,
+    icon: (
+      <FontAwesome5 name="dumbbell" size={16} color={colors.motivationalText} />
+    ),
   },
   {
     id: 2,
@@ -13,14 +15,16 @@ export const Categories = [
     icon: (
       <MaterialCommunityIcons
         name="yoga"
-        size={24}
-        color={colors.textPrimary}
+        size={16}
+        color={colors.motivationalText}
       />
     ),
   },
   {
     id: 3,
     name: "Cardio",
-    icon: <FontAwesome5 name="running" size={24} color={colors.textPrimary} />,
+    icon: (
+      <FontAwesome5 name="running" size={16} color={colors.motivationalText} />
+    ),
   },
 ];

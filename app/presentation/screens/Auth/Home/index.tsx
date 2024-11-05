@@ -1,25 +1,34 @@
+import { CategoryCarousel } from "@/presentation/components/categories";
 import { Container } from "@/presentation/components/container";
+import { Header } from "@/presentation/components/header";
+import { categories } from "@/presentation/mock/training";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
-import React from "react";
-import { TouchableOpacity } from "react-native";
-import { Categories } from "./constants";
+import React, { useState } from "react";
 import * as S from "./styles";
 
 export default function Home() {
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [filteredTrainings, setFilteredTrainings] = useState<any[]>([]);
   const navigation: NavigationProp<any, any> = useNavigation();
-
   const navigateToWorkout = () => navigation.navigate("Workout");
   const navigateToProgress = () => navigation.navigate("Progress");
 
- 
+  const handleCategorySelect = (categoryName: string) => {
+    setSelectedCategory(categoryName);
+
+    const category = categories.find((cat) => cat.name === categoryName);
+    setFilteredTrainings(category ? category.trainings : []);
+  };
 
   return (
     <Container>
       <S.ScrollContainer>
-        <S.Header>
-          <S.Title>Bem-vindo(a) ao {"\n"} Home Workout Pro!</S.Title>
-          <S.SubTitle>Saúde e bem-estar na palma da sua mão.</S.SubTitle>
-        </S.Header>
+        <Header />
+
+        <S.CategorySection>
+          <S.SectionTitle>Categorias</S.SectionTitle>
+          <CategoryCarousel onCategorySelect={handleCategorySelect} />
+        </S.CategorySection>
 
         <S.FeaturedWorkout>
           <S.SectionTitle>Seu treino de hoje</S.SectionTitle>
@@ -28,11 +37,11 @@ export default function Home() {
           <S.WorkoutDescription>
             Em apenas 30 minutos, sinta a transformação no seu corpo e energia!
           </S.WorkoutDescription>
-          <TouchableOpacity onPress={navigateToWorkout}>
-            <S.ButtonText>
+          <S.StartButton onPress={navigateToWorkout}>
+            <S.StartButtonText>
               Comece agora e faça um pouquinho por dia!
-            </S.ButtonText>
-          </TouchableOpacity>
+            </S.StartButtonText>
+          </S.StartButton>
         </S.FeaturedWorkout>
 
         <S.ProgressSection>
@@ -40,24 +49,12 @@ export default function Home() {
           <S.ProgressChart
             source={{ uri: "https://via.placeholder.com/400" }}
           />
-          <TouchableOpacity onPress={navigateToProgress}>
-            <S.ButtonText>
+          <S.ProgressButton onPress={navigateToProgress}>
+            <S.ProgressButtonText>
               Veja como você está se superando a cada dia!
-            </S.ButtonText>
-          </TouchableOpacity>
+            </S.ProgressButtonText>
+          </S.ProgressButton>
         </S.ProgressSection>
-
-        <S.OtherSections>
-          <S.SectionTitle>Explore nossas categorias de treino</S.SectionTitle>
-          <S.CategoriesContainer>
-            {Categories.map((category) => (
-              <S.CategoryCard key={category.id}>
-                {category.icon}
-                <S.CategoryText>{category.name}</S.CategoryText>
-              </S.CategoryCard>
-            ))}
-          </S.CategoriesContainer>
-        </S.OtherSections>
       </S.ScrollContainer>
     </Container>
   );
