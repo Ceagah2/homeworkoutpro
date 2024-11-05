@@ -19,4 +19,13 @@ const GetItem = async (key: string) => {
   }
 };
 
-export { GetItem, SetItem };
+const RemoveItem = async (key: string) => {
+  try {
+    await AsyncStorage.removeItem(key);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export { GetItem, RemoveItem, SetItem };
+
