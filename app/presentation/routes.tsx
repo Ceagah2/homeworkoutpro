@@ -9,6 +9,7 @@ import Home from "./screens/Auth/Home";
 import Profile from './screens/Auth/Profile';
 import Workouts from './screens/Auth/Workouts';
 import Login from "./screens/Public/Login";
+import SignUp from './screens/Public/SignUp';
 import { Slider } from "./screens/Public/Slider/Slide";
 import { colors } from './theme';
 
@@ -93,6 +94,7 @@ export default function Routes() {
       >
         <Stack.Screen name="Slide" component={Slider} />
         <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen
           name="Main"
           component={MainTabs}
