@@ -1,3 +1,4 @@
+import { tokenCache } from '@/data/tokenCache';
 import { UserProvider } from '@/data/userContext';
 import Routes from '@/presentation/routes';
 import { ClerkLoaded, ClerkProvider } from '@clerk/clerk-expo';
@@ -23,13 +24,13 @@ const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
   
   if(!fontsLoaded) return <ActivityIndicator />
 
-  return(
-    <ClerkProvider publishableKey={publishableKey}>
-      <UserProvider>
-        <ClerkLoaded>
+  return (
+    <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
+      <ClerkLoaded>
+        <UserProvider>
           <Routes />
-        </ClerkLoaded>
-      </UserProvider>
+        </UserProvider>
+      </ClerkLoaded>
     </ClerkProvider>
-  )
+  );
 }

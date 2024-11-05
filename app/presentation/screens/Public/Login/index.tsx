@@ -1,3 +1,4 @@
+import { useUser } from "@/data/userContext";
 import { Button } from "@/presentation/components/button";
 import { Container } from "@/presentation/components/container";
 import { Input } from "@/presentation/components/input";
@@ -7,6 +8,7 @@ import Training from "@assets/treinadoras.png";
 import { useOAuth } from "@clerk/clerk-expo";
 import { AntDesign } from "@expo/vector-icons";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
+import * as Linking from 'expo-linking';
 import { useState } from "react";
 import { Alert, TouchableOpacity } from "react-native";
 import * as S from "./styles";
@@ -17,7 +19,7 @@ export default function Login() {
   const [loadingButton, setLoadingButton] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
-
+  const { login } = useUser(); 
   const googleOAuth = useOAuth({ strategy: "oauth_google" });
   const appleOAuth = useOAuth({ strategy: "oauth_apple" });
   const navigation: NavigationProp<any, any> = useNavigation();
@@ -35,6 +37,13 @@ export default function Login() {
     }
 
     if (email === "carlosteste@teste.com" && password === "teste123") {
+      login({
+        fullName: "Carlos Teste",
+        email,
+        photoUrl: "https://via.placeholder.com/400",
+        isLoggedBy: "email",
+        isLoggedIn: true
+      });
       SetItem("@isLogged", "true");
       navigation.navigate("Main");
       setIsLoading(false);
@@ -44,25 +53,54 @@ export default function Login() {
     }
   };
 
-
-
   const handleOAuthLogin = async (provider: "google" | "apple") => {
     let oauthProvider = provider === "google" ? googleOAuth : appleOAuth;
 
     try {
       setLoadingButton(provider);
-      const { createdSessionId, setActive } =
-        await oauthProvider.startOAuthFlow();
-      if (setActive && createdSessionId) {
-        await setActive({ session: createdSessionId });
-      }
-      navigation.navigate("Main");
-    } catch (error) {
-      console.log("Error during OAuth login:", error);
-    } finally {
-      setLoadingButton(null);
+      const redirectUrl = Linking.createURL('/Main')
+      const oAuthFlow = await oauthProvider.startOAuthFlow({ redirectUrl })
+
+      if(oAuthFlow.authSessionResult?.type === 'success'){
+        if(oAuthFlow.setActive){
+          await oAuthFlow.setActive({ session: oAuthFlow.createdSessionId });
+        }
+        setLoadingButton("");
+        navigation.navigate('/Main')
+      } else (
+        setLoadingButton('')
+      )
+    } catch(e){
+      setLoadingButton('')
+      console.log(e.data.message)
     }
+    // try {
+    //   setLoadingButton(provider);
+    //   const { createdSessionId, setActive } = await oauthProvider.startOAuthFlow();
+
+    //   if (setActive && createdSessionId && session) {
+    //     await setActive({ session: createdSessionId });
+
+    //     const userInfo: User = {
+    //       fullName: session?.user?.fullName,
+    //       email: session?.user?.emailAddresses[0]?.emailAddress,
+    //       photoUrl: session?.user?.profileImageUrl,
+    //       isLoggedBy: "social",
+    //       isLoggedIn: true,
+    //     };
+    //    login(userInfo);
+    //    console.log("dados do usuario:", userInfo);
+
+    //   }
+    // } catch (error) {
+    //   console.log("Erro durante o login social:", error.data.message);
+    // } finally {
+    //    await SetItem("@isLogged", "true");
+    //    navigation.navigate("Main"); 
+    //   setLoadingButton(null);
+    // }
   };
+
 
   return (
     <Container>
@@ -138,6 +176,7 @@ export default function Login() {
           >
             <S.LinkText>Esqueceu a senha? Vamos recuperar!</S.LinkText>
           </TouchableOpacity>
+          
         </S.FooterLinks>
       </S.LoginForm>
     </Container>

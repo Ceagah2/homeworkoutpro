@@ -8,5 +8,5 @@ export interface IButton {
   width?: number;
   height?: number;
   children?: React.ReactNode;
-  isLoading: boolean;
+  isLoading?: boolean;
 }

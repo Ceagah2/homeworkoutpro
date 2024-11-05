@@ -1,14 +1,9 @@
+import { getClerkInstance } from "@clerk/clerk-expo";
 import React, { createContext, useContext, useState } from "react";
-
-interface User {
-  fullName: string;
-  email: string;
-  photoUrl?: string;
-  isLoggedIn: boolean;
-}
+import { User } from "./userContext.interface";
 
 interface UserContextProps {
-  user: User | null;
+  userData: User | null;
   login: (userInfo: User) => void;
   logout: () => void;
 }
@@ -16,18 +11,21 @@ interface UserContextProps {
 const UserContext = createContext<UserContextProps | undefined>(undefined);
 
 export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [userData, setUserData] = useState<User | null>(null);
 
   const login = (userInfo: User) => {
-    setUser({ ...userInfo, isLoggedIn: true });
+    setUserData({ ...userInfo, isLoggedIn: true });
   };
 
-  const logout = () => {
-    setUser(null);
+  const logout = async () => {
+    setUserData(null);
+    const clerkInstance = getClerkInstance();
+    await clerkInstance.signOut();
   };
+
 
   return (
-    <UserContext.Provider value={{ user, login, logout }}>
+    <UserContext.Provider value={{ userData, login, logout }}>
       {children}
     </UserContext.Provider>
   );

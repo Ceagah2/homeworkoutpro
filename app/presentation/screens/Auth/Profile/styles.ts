@@ -1,3 +1,4 @@
+import { useResponsive } from "@/presentation/hooks/useResponsive";
 import { colors, fonts } from "@/presentation/theme";
 import styled from "styled-components/native";
 
@@ -40,6 +41,7 @@ export const SettingsContainer = styled.View`
 `;
 
 export const SettingItem = styled.TouchableOpacity`
+  width: 100%;
   flex-direction: row;
   align-items: center;
   padding: 12px 0;
@@ -63,7 +65,26 @@ export const LogoutButton = styled.TouchableOpacity`
 
 export const LogoutButtonText = styled.Text`
   color: ${colors.background};
-  font-size: 16px;
+  font-size: ${useResponsive(14)};
   font-family: ${fonts.heading};
   text-align: center;
 `;
+
+export const NotificationsContainer = styled.View`
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+  background: ${colors.secondaryAction};
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+`;
+export const NotificationsText = styled.Text`
+  color: ${colors.background};
+  font-size: ${useResponsive(10)};
+  font-family: ${fonts.body};
+  text-align: center;
+ 
+`
