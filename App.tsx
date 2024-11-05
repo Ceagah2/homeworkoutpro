@@ -1,3 +1,4 @@
+import { UserProvider } from '@/data/userContext';
 import Routes from '@/presentation/routes';
 import { ClerkLoaded, ClerkProvider } from '@clerk/clerk-expo';
 import {
@@ -24,9 +25,11 @@ const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
 
   return(
     <ClerkProvider publishableKey={publishableKey}>
-      <ClerkLoaded>
-        <Routes />
-      </ClerkLoaded>
+      <UserProvider>
+        <ClerkLoaded>
+          <Routes />
+        </ClerkLoaded>
+      </UserProvider>
     </ClerkProvider>
   )
 }

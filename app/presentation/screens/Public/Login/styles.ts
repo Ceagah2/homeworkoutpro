@@ -62,19 +62,22 @@ export const OrText = styled.Text`
   text-align: center;
 `;
 
-export const ButtonWrapper = styled.TouchableOpacity`
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  background-color: ${({ backgroundColor }) =>
-    backgroundColor || colors.primaryAction};
-  width: 45%;
-  padding: 10px;
-  border-radius: 8px;
-`;
+
 
 export const EyeIcon = styled.TouchableOpacity`
   position: absolute;
   right: 15px;
   top: 12px;
+`;
+
+export const FooterLinks = styled.View`
+  margin-top: 16px;
+  align-items: center;
+`;
+
+export const LinkText = styled.Text`
+  color: ${colors.primaryAction};
+  font-size: 14px;
+  margin-top: 8px;
+  font-family: ${fonts.body};
 `;

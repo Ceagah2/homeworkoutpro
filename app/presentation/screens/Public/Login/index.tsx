@@ -8,7 +8,7 @@ import { useOAuth } from "@clerk/clerk-expo";
 import { AntDesign } from "@expo/vector-icons";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { useState } from "react";
-import { Alert } from "react-native";
+import { Alert, TouchableOpacity } from "react-native";
 import * as S from "./styles";
 
 export default function Login() {
@@ -25,44 +25,38 @@ export default function Login() {
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
   };
+
   const handleEmailLogin = async () => {
-    setIsLoading(true)
-    if(!email || !password || email === "" || password === "") {
+    setIsLoading(true);
+    if (!email || !password) {
       Alert.alert("Ops...", "Por favor preencha todos os campos.");
       setIsLoading(false);
       return;
     }
 
-    if(email === "carlosteste@teste.com" || password === "teste123") {
+    if (email === "carlosteste@teste.com" && password === "teste123") {
       SetItem("@isLogged", "true");
-      navigation.navigate("Main")
+      navigation.navigate("Main");
       setIsLoading(false);
     } else {
       Alert.alert("Ops...", "Email ou senha inválidos.");
       setIsLoading(false);
-      return;
     }
-  }
+  };
+
+
 
   const handleOAuthLogin = async (provider: "google" | "apple") => {
-    let oauthProvider;
-    switch (provider) {
-      case "google":
-        oauthProvider = googleOAuth;
-        break;
-      case "apple":
-        oauthProvider = appleOAuth;
-        break;
-      default:
-        return;
-    }
+    let oauthProvider = provider === "google" ? googleOAuth : appleOAuth;
 
     try {
       setLoadingButton(provider);
-      const { createdSessionId, setActive } = await oauthProvider.startOAuthFlow();
+      const { createdSessionId, setActive } =
+        await oauthProvider.startOAuthFlow();
       if (setActive && createdSessionId) {
         await setActive({ session: createdSessionId });
       }
+      navigation.navigate("Main");
     } catch (error) {
       console.log("Error during OAuth login:", error);
     } finally {
@@ -76,13 +70,18 @@ export default function Login() {
         <S.Title>Home Workout Pro</S.Title>
         <S.Image source={Training} />
         <S.Description>
-          Fazer exercícios físicos nunca foi {'\n'} tão fácil e divertido
+          Fazer exercícios físicos nunca foi {"\n"} tão fácil e divertido
         </S.Description>
       </S.Header>
 
       <S.LoginForm>
         <S.InputContainer>
-          <Input placeholder="Email" value={email} onChangeText={setEmail} autoCapitalize="none"/>
+          <Input
+            placeholder="Email"
+            value={email}
+            onChangeText={(text) => setEmail(text)}
+            autoCapitalize="none"
+          />
         </S.InputContainer>
         <S.InputContainer>
           <Input
@@ -129,6 +128,17 @@ export default function Login() {
             <S.ButtonText>Apple</S.ButtonText>
           </Button>
         </S.ButtonContainer>
+
+        <S.FooterLinks>
+          <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
+            <S.LinkText>Não tem uma conta? Crie uma agora!</S.LinkText>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("ForgotPassword")}
+          >
+            <S.LinkText>Esqueceu a senha? Vamos recuperar!</S.LinkText>
+          </TouchableOpacity>
+        </S.FooterLinks>
       </S.LoginForm>
     </Container>
   );
