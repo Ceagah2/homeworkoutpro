@@ -1,9 +1,8 @@
 import { Container } from "@/presentation/components/container";
-import { colors } from "@/presentation/theme";
-import { FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import React from "react";
 import { TouchableOpacity } from "react-native";
+import { Categories } from "./constants";
 import * as S from "./styles";
 
 export default function Home() {
@@ -12,33 +11,7 @@ export default function Home() {
   const navigateToWorkout = () => navigation.navigate("Workout");
   const navigateToProgress = () => navigation.navigate("Progress");
 
-  const Categories = [
-    {
-      id: 1,
-      name: "Força",
-      icon: (
-        <FontAwesome5 name="dumbbell" size={24} color={colors.textPrimary} />
-      ),
-    },
-    {
-      id: 2,
-      name: "Flexibilidade",
-      icon: (
-        <MaterialCommunityIcons
-          name="yoga"
-          size={24}
-          color={colors.textPrimary}
-        />
-      ),
-    },
-    {
-      id: 3,
-      name: "Cardio",
-      icon: (
-        <FontAwesome5 name="running" size={24} color={colors.textPrimary} />
-      ),
-    },
-  ];
+ 
 
   return (
     <Container>
