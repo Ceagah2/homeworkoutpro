@@ -1,5 +1,6 @@
 import { Feather, FontAwesome, Ionicons } from "@expo/vector-icons";
 import { TextInputProps } from "react-native";
+
 export interface ITextInputProps extends TextInputProps {
  leftIcon?: boolean
  rightIcon?: boolean

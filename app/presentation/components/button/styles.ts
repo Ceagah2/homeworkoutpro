@@ -24,6 +24,7 @@ export const Container = styled.TouchableOpacity<TContainer>`
   align-items: center;
   justify-content: center;
   flex-direction: row;
+  gap: 8px;
   border: ${(props) => props.border ? props.border + `px ` + `solid ` + props.borderColor : 0};
 `;
 
